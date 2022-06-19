@@ -1,13 +1,12 @@
 module.exports = {
   apps : [{
-    script: 'index.js',
-    watch: '.'
-  }, {
-    script: './service-worker/',
-    watch: ['./service-worker']
-  }],
+    name: 'strapi',
+    script: 'npm',
+    args: 'start',
+  }]
+};
 
-  deploy : {
+ /* deploy : {
     production : {
       user : 'SSH_USERNAME',
       host : 'SSH_HOSTMACHINE',
@@ -19,4 +18,4 @@ module.exports = {
       'pre-setup': ''
     }
   }
-};
+};*/
