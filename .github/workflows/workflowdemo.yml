@@ -1,1 +1,18 @@
+name: Continuous Integration Workflow
+on: [push, pull_request]
 
+jobs:
+  build:
+    name: Build, Test, Pack, Push
+    runs-on: windows-latest
+    env:
+      PUSH_PACKAGES: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+    steps:
+      - uses: actions/checkout@master
+
+      - run: dotnet restore
+      - run: dotnet build --no-restore --configuration Release
+      - run: dotnet test --no-build --configuration Release
+      - run: dotnet pack --output nupkgs --no-build --configuration Release 
+      - if: ${{ env.PUSH_PACKAGES }}
+        run: dotnet nuget push nupkgs\*.nupkg
